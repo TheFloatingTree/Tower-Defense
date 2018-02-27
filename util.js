@@ -59,6 +59,22 @@ function getAngle(x1, y1, x2, y2) {
     return Math.atan2(dy, dx);
 }
 
+function getVector(x1, y1, x2, y2) {
+        let x = x1 - x2;
+        let y = y1 - y2;
+
+        if (x === 0 && y === 0) {
+            return {x: x, y: y};
+        }
+
+        let hyp = Math.sqrt(x * x + y * y);
+
+        x /= hyp;
+        y /= hyp;
+
+        return {x: -x, y: -y};
+}
+
 
 // draw tracking rect at xy
 function getLineXYatPercent(startPt, endPt, percent) {

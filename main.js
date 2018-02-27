@@ -27,6 +27,7 @@ mapArea.fill = 'white';
 mapArea.noStroke();
 
 //Create managers
+var map = new Map();
 var game = new Game();
 var enemy = new Enemy();
 var tower = new Tower();
@@ -39,6 +40,7 @@ two.bind('update', function(frameCount) {
     tower.update();
     enemy.update();
     game.waveManager.update();
+    map.update();
 
     //GAMEPLAY
     //spawn enemies

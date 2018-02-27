@@ -5,8 +5,8 @@ class Enemy {
         this.speedOff = 0.2;
         this.dead = false;
 
-        this.speed = 0.5 - this.speedOff;
-        this.slider = 0;
+        // this.speed = 0.5 - this.speedOff;
+        // this.slider = 0;
 
         this.trigger = false;
 
@@ -22,12 +22,6 @@ class Enemy {
         }
     }
 
-    assignIndexPositions() {
-        for (let i = 0; i < enemies.length; i++) {
-            enemies[i].iPos = i;
-        }
-    }
-
     cullEnemies() {
         for (let i = enemies.length - 1; i >= 0; i--) {
             if (enemies[i].dead) {
@@ -36,52 +30,67 @@ class Enemy {
         }
     }
 
-    move() {
-        var xy;
+    // move() {
+    //     var xy;
 
-        this.end();
-        this.slider += this.speed;
+    //     this.end();
+    //     this.slider += this.speed;
 
-        if (this.slider < 33) {
-            var percent = this.slider / 33;
-            xy = getLineXYatPercent(this.startPoint, {
-                x: 200,
-                y: 60
-            }, percent);
-        } else if (this.slider < 66) {
-            var percent = (this.slider - 33) / 33;
-            this.speed = 0.35 - this.speedOff;
-            xy = getLineXYatPercent({
-                x: 200,
-                y: 60
-            }, {
-                    x: 200,
-                    y: 300
-                }, percent);
-        } else {
-            var percent = (this.slider - 66) / 33;
-            xy = getLineXYatPercent({
-                x: 200,
-                y: 300
-            }, {
-                    x: 400,
-                    y: 300
-                }, percent);
+    //     if (this.slider < 33) {
+    //         var percent = this.slider / 33;
+    //         xy = getLineXYatPercent(this.startPoint, {
+    //             x: 200,
+    //             y: 60
+    //         }, percent);
+    //     } else if (this.slider < 66) {
+    //         var percent = (this.slider - 33) / 33;
+    //         this.speed = 0.35 - this.speedOff;
+    //         xy = getLineXYatPercent({
+    //             x: 200,
+    //             y: 60
+    //         }, {
+    //                 x: 200,
+    //                 y: 300
+    //             }, percent);
+    //     } else {
+    //         var percent = (this.slider - 66) / 33;
+    //         xy = getLineXYatPercent({
+    //             x: 200,
+    //             y: 300
+    //         }, {
+    //                 x: 400,
+    //                 y: 300
+    //             }, percent);
+    //     }
+
+
+    //     this.pos = xy;
+    //     this.group.translation.set(this.pos.x, this.pos.y);
+    // }
+
+    // end() {
+    //     if (this.slider > 100) {
+    //         this.speed = 0;
+    //         two.remove(this.group);
+    //         this.dead = true;
+
+    //         game.removeHealth(1);
+    //     }
+    // }
+
+    moveToPoint(point) {
+        let speed = 5;
+        let vec = getVector(this.pos.x, this.pos.y, point.x, point.y);
+
+        this.pos.x += vec.x * speed;
+        this.pos.y += vec.y * speed;
+
+        if (vec.x < 0 || vec.y < 0) {
+            this.pos.x = point.x;
+            this.pos.y = point.y;
         }
 
-
-        this.pos = xy;
         this.group.translation.set(this.pos.x, this.pos.y);
-    }
-
-    end() {
-        if (this.slider > 100) {
-            this.speed = 0;
-            two.remove(this.group);
-            this.dead = true;
-
-            game.removeHealth(1);
-        }
     }
 
     death() {
@@ -123,10 +132,6 @@ class Enemy {
         if (this.health <= 0) {
             this.death();
         }
-    }
-
-    activate(iPos) {
-        enemies[iPos].active = true;
     }
 
     updateHealthBar() {
@@ -192,9 +197,10 @@ class BasicEnemy extends Enemy {
         //     this.move();
         // }
 
-        this.move();
+        // this.move();
 
-        enemy.assignIndexPositions();
+        // enemy.assignIndexPositions();
+        this.moveToPoint(map.points[1]);
         this.updateHealthBar();
     }
 }
@@ -215,8 +221,6 @@ class MediumEnemy extends Enemy {
         this.healthConst = this.health;
         this.active = false;
         this.iPos = 0;
-
-        enemy.assignIndexPositions();
 
         //Appearance 
 
@@ -239,7 +243,7 @@ class MediumEnemy extends Enemy {
         //     this.move();
         // }
 
-        this.move();
+        // this.move();
 
         this.updateHealthBar();
     }
