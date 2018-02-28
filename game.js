@@ -4,35 +4,49 @@ class Game {
     constructor() {
         this.money = 100;
         this.health = 100;
+
+        //DONT TOUCH
         this.wave = 0;
+        this.skipFlag = false;
 
         this.wavesData = [
             [
-                {types: [0], amounts: [5], freq: 200}
+                {types: [0], amounts: [4], freq: 200}
             ],
             [
-                {types: [0], amounts: [6], freq: 180}
-            ],
-            [
-                {types: [0], amounts: [7], freq: 170}
+                {types: [0], amounts: [8], freq: 170}
             ],
             [
                 {types: [0], amounts: [9], freq: 150}
             ],
             [
-                {types: [0], amounts: [10], freq: 100}
+                {types: [0], amounts: [10], freq: 130}
             ],
             [
-                {types: [0], amounts: [5], freq: 60},
-                {types: [0, 1], amounts: [5, 2], freq: 60}
+                {types: [0], amounts: [10], freq: 100},
+                {types: [1], amounts: [1], freq: 60}
             ],
             [
-                {types: [0], amounts: [5], freq: 60},
-                {types: [0, 1], amounts: [5, 2], freq: 60}
+                {types: [0], amounts: [5], freq: 80},
+                {types: [1], amounts: [1], freq: 60},
+                {types: [0], amounts: [5], freq: 70}
             ],
             [
-                {types: [0], amounts: [5], freq: 60},
-                {types: [0, 1], amounts: [5, 2], freq: 60}
+                {types: [0], amounts: [5], freq: 70},
+                {types: [1], amounts: [1], freq: 50},
+                {types: [0], amounts: [7], freq: 60}
+            ],
+            [
+                {types: [1], amounts: [3], freq: 70},
+                {types: [0], amounts: [12], freq: 60}
+            ],
+            [
+                {types: [1], amounts: [2], freq: 60},
+                {types: [0, 1], amounts: [8, 6], freq: 80},
+                {types: [0], amounts: [7], freq: 50}
+            ],
+            [
+                {types: [0], amounts: [17], freq: 45},
             ]
         ]
 
@@ -58,6 +72,17 @@ class Game {
     addMoney(amount) {
         this.money += amount;
     }
+
+    skipReward() {
+        if (this.skipFlag) {
+            this.addMoney(Math.floor(game.waveManager.countdown * 1.5));
+            this.skipFlag = false;
+        }
+    }
+
+    waveReward() {
+        this.addMoney(20);
+    }
 }
 
 class WaveManager {
@@ -70,7 +95,7 @@ class WaveManager {
         this.fullyDone = false;
         this.gameEnd = false;
 
-        this.timeBetween = 20;
+        this.timeBetween = 30;
         this.countdown;
 
         this.timeoutVar;
@@ -83,6 +108,9 @@ class WaveManager {
     incrementWave(force) {
         if (this.fullyDone || force) {
             this.waveObjects[this.wave].active = true;
+            if (!(this.wave === 0)) {
+                game.waveReward();
+            }
             game.waveManager.wave++;
         }
         this.ready = false;

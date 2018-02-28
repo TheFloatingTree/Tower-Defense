@@ -81,6 +81,7 @@ class Interface {
                             this.switchView(0);
                             break;
                         case "NextWave":
+                            game.skipReward();
                             game.waveManager.incrementWave();
                             game.waveManager.startCountdown();
                             break;
@@ -167,6 +168,7 @@ class Interface {
                 this.text.value = game.waveManager.countdown;
                 if (game.waveManager.fullyDone) {
                     this.text.value = "Skip? " + game.waveManager.countdown;
+                    game.skipFlag = true;
                 }
             } else {
                 this.text.value = "Start";

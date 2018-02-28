@@ -13,10 +13,12 @@ const elem = document.getElementById('content');
 const params = { width: window.innerWidth - 4, height: window.innerHeight - 4};
 const two = new Two(params).appendTo(elem);
 
+//create body background
 let background = two.makeRectangle(params.width/2, params.height/2, params.width, params.height);
 background.fill = 'darkgrey';
 background.noStroke();
 
+//create game area
 const mapAreaSize = {
     width: params.width - 400,
     height: (params.width - 400) * (3/4)

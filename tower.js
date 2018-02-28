@@ -13,12 +13,10 @@ class Tower {
             y: 150
         };
 
-        this.placeableArea = {
-            x: mapAreaSize.width/2,
-            y: mapAreaSize.height/2,
-            w: mapAreaSize.width,
-            h: mapAreaSize.height
-        };
+        this.placeableAreas = [
+            map.area1,
+            map.area2
+        ]
 
         this.pos = this.startPoint;
     }
@@ -64,11 +62,11 @@ class Tower {
     
     friendlyTowerNames(type) {
         if (type === 0) {
-            return "Basic Tower";
+            return "Basic";
         } else if (type == 1) {
-            return "Medium Tower";
+            return "Sniper";
         } else if (type == 2) {
-            return "Best Tower";
+            return "Machine Gun";
         }
     }
 
@@ -177,11 +175,13 @@ class Tower {
     }
 
     checkPlace() {
-        if (collision2(this.placeableArea.x, this.placeableArea.y, this.placeableArea.w, this.placeableArea.h, mpos.x, mpos.y, 1, 1)) {
-            return true;
-        } else {
-            return false;
+        let output;
+        for (let i = 0; i < this.placeableAreas.length; i++) {
+            if (collision2(this.placeableAreas[i].x, this.placeableAreas[i].y, this.placeableAreas[i].w, this.placeableAreas[i].h, mpos.x, mpos.y, 1, 1)) {
+                return true;
+            }
         }
+        return false;
     }
 
     cullOverlayTowers() {
@@ -239,13 +239,13 @@ class BasicTower extends Tower {
         this.shootSpeed = 10;
         this.bulletdecay = 75;
         this.damage = 2;
-        this.range = 150;
-        this.price = 10;
+        this.range = 100;
+        this.price = 40;
 
         this.upgradePrices = {
-            range: 10,
-            speed: 10,
-            damage: 10
+            range: 15,
+            speed: 30,
+            damage: 25
         }
 
         this.pos.x = x;
@@ -356,16 +356,16 @@ class MediumTower extends Tower {
         this.size = 10;
         this.scale = 1;
 
-        this.shootSpeed = 10;
-        this.bulletdecay = 75;
-        this.damage = 4;
-        this.range = 150;
-        this.price = 20;
+        this.shootSpeed = 40;
+        this.bulletdecay = 100;
+        this.damage = 7;
+        this.range = 200;
+        this.price = 60;
 
         this.upgradePrices = {
-            range: 10,
-            speed: 10,
-            damage: 10
+            range: 30,
+            speed: 50,
+            damage: 50
         }
 
         this.pos.x = x;
@@ -482,12 +482,12 @@ class BestTower extends Tower {
         this.bulletdecay = 75;
         this.damage = 6;
         this.range = 150;
-        this.price = 30;
+        this.price = 150;
 
         this.upgradePrices = {
-            range: 10,
-            speed: 10,
-            damage: 10
+            range: 15,
+            speed: 30,
+            damage: 25
         }
 
         this.pos.x = x;

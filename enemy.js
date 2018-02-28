@@ -1,16 +1,16 @@
 class Enemy {
     constructor() {
         this.pos = { x: 0, y: 0 };
+        this.dim = { w: mapAreaSize.width, h: mapAreaSize.height };
 
         this.speedOff = 0.2;
         this.dead = false;
-
-        // this.speed = 0.5 - this.speedOff;
-        // this.slider = 0;
+        this.targetPoint = 1;
 
         this.trigger = false;
+        this.speed = 1;
 
-        this.startPoint = { x: 0, y: 60 };
+        this.startPoint = { x: 20, y: this.dim.h / 4 };
         this.pos = this.startPoint;
     }
 
@@ -30,56 +30,20 @@ class Enemy {
         }
     }
 
-    // move() {
-    //     var xy;
+    reachEndCheck() {
+        let len = map.points.length - 1;
+        let point = map.points[len];
+        if (this.pos.x === point.x && this.pos.y === point.y) {
+            this.speed = 0;
+            two.remove(this.group);
+            this.dead = true;
 
-    //     this.end();
-    //     this.slider += this.speed;
-
-    //     if (this.slider < 33) {
-    //         var percent = this.slider / 33;
-    //         xy = getLineXYatPercent(this.startPoint, {
-    //             x: 200,
-    //             y: 60
-    //         }, percent);
-    //     } else if (this.slider < 66) {
-    //         var percent = (this.slider - 33) / 33;
-    //         this.speed = 0.35 - this.speedOff;
-    //         xy = getLineXYatPercent({
-    //             x: 200,
-    //             y: 60
-    //         }, {
-    //                 x: 200,
-    //                 y: 300
-    //             }, percent);
-    //     } else {
-    //         var percent = (this.slider - 66) / 33;
-    //         xy = getLineXYatPercent({
-    //             x: 200,
-    //             y: 300
-    //         }, {
-    //                 x: 400,
-    //                 y: 300
-    //             }, percent);
-    //     }
-
-
-    //     this.pos = xy;
-    //     this.group.translation.set(this.pos.x, this.pos.y);
-    // }
-
-    // end() {
-    //     if (this.slider > 100) {
-    //         this.speed = 0;
-    //         two.remove(this.group);
-    //         this.dead = true;
-
-    //         game.removeHealth(1);
-    //     }
-    // }
+            game.removeHealth(1);
+        }
+    }
 
     moveToPoint(point) {
-        let speed = 5;
+        let speed = this.speed;
         let vec = getVector(this.pos.x, this.pos.y, point.x, point.y);
 
         this.pos.x += vec.x * speed;
@@ -91,6 +55,19 @@ class Enemy {
         }
 
         this.group.translation.set(this.pos.x, this.pos.y);
+    }
+
+    reachPointCheck(point) {
+        if (this.pos.x === point.x && this.pos.y === point.y) {
+            // console.log("Reached " + point.x + ", " + point.y);
+            this.targetPoint++;
+        }
+    }
+
+    move() {
+        this.moveToPoint(map.points[this.targetPoint]);
+        this.reachPointCheck(map.points[this.targetPoint]);
+        this.reachEndCheck();
     }
 
     death() {
@@ -181,26 +158,12 @@ class BasicEnemy extends Enemy {
         this.group = two.makeGroup(this.circle, this.healthBar);
         this.group.translation.set(this.pos.x, this.pos.y);
         this.group.center();
-
-        // let tempIPos = this.iPos;
-
-        // setTimeout(function() {
-        //     enemy.activate(tempIPos);
-        //     console.log(tempIPos);
-        // }, random(0, 1000));
     }
 
     update() {
         this.checkDead();
-
-        // if (this.active) {
-        //     this.move();
-        // }
-
-        // this.move();
-
-        // enemy.assignIndexPositions();
-        this.moveToPoint(map.points[1]);
+        this.move();
+        
         this.updateHealthBar();
     }
 }
@@ -239,11 +202,7 @@ class MediumEnemy extends Enemy {
 
     update() {
         this.checkDead();
-        // if (this.active) {
-        //     this.move();
-        // }
-
-        // this.move();
+        this.move();
 
         this.updateHealthBar();
     }
