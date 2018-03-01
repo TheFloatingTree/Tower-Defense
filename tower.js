@@ -138,31 +138,39 @@ class Tower {
     upgrade(type) {
         switch(type) {
             case 0:
-                if (game.removeMoney(this.upgradePrices.range)) {
+                if (this.upgradePrices.range <= game.money && this.upgradeAmounts.range < 3) {
+                    game.removeMoney(this.upgradePrices.range);
                     this.range += 10;
+                    this.upgradeAmounts.range++;
                     tower.toggleRangeOverlay();
                     tower.toggleRangeOverlay();
                     this.upgradePrices.range += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2);
+                    this.price += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2)
                 }
                 break;
             case 1:
-                if (this.shootSpeed > 1) {
-                    if (game.removeMoney(this.upgradePrices.speed)) {
+                if (this.shootSpeed > 1 && this.upgradeAmounts.speed < 3) {
+                    if (this.upgradePrices.range <= game.money) {
+                        game.removeMoney(this.upgradePrices.range);
                         this.shootSpeed -= 1;
+                        this.upgradeAmounts.speed++;
                         this.upgradePrices.speed += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2);
+                        this.price += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2)
                     }
                 }
                 break;
             case 2:
-                if (game.removeMoney(this.upgradePrices.damage)) {
+                if (this.upgradePrices.range <= game.money && this.upgradeAmounts.damage < 3) {
+                    game.removeMoney(this.upgradePrices.range);
                     this.damage += 1;
+                    this.upgradeAmounts.damage++;
                     this.upgradePrices.damage += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2);
+                    this.price += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2)
                 }
                 break;
             default:
                 break;
         }
-        this.price += Math.floor(this.averageUpgradePrice(this.upgradePrices) / 2)
     }
 
     sellTower(obj) {
@@ -246,6 +254,12 @@ class BasicTower extends Tower {
             range: 15,
             speed: 30,
             damage: 25
+        }
+
+        this.upgradeAmounts = {
+            range: 0,
+            speed: 0,
+            damage: 0
         }
 
         this.pos.x = x;
@@ -368,6 +382,12 @@ class MediumTower extends Tower {
             damage: 50
         }
 
+        this.upgradeAmounts = {
+            range: 0,
+            speed: 0,
+            damage: 0
+        }
+
         this.pos.x = x;
         this.pos.y = y;
 
@@ -478,16 +498,22 @@ class BestTower extends Tower {
         this.size = 10;
         this.scale = 1;
 
-        this.shootSpeed = 10;
+        this.shootSpeed = 3;
         this.bulletdecay = 75;
-        this.damage = 6;
-        this.range = 150;
-        this.price = 150;
+        this.damage = 2;
+        this.range = 50;
+        this.price = 100;
 
         this.upgradePrices = {
             range: 15,
             speed: 30,
             damage: 25
+        }
+
+        this.upgradeAmounts = {
+            range: 0,
+            speed: 0,
+            damage: 0
         }
 
         this.pos.x = x;

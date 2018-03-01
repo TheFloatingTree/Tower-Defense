@@ -2,7 +2,7 @@
 
 class Game {
     constructor() {
-        this.money = 100;
+        this.money = 10000;
         this.health = 100;
 
         //DONT TOUCH
