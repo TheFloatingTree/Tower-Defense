@@ -201,8 +201,8 @@ class Interface {
         this.elements.push(ie3);
         let ie4 = new Button("Damage", "UpgradeDamage", g1Off.x + this.pos.x - (this.width/2) + 220, g1Off.y + this.pos.y - (this.height/2) + this.headerheight + 200, 120, 50);
         this.elements.push(ie4);
-        let ie5 = new Button("Null", "Upgrade4", g1Off.x + this.pos.x - (this.width/2) + 220, g1Off.y + this.pos.y - (this.height/2) + this.headerheight + 260, 120, 50);
-        this.elements.push(ie5);
+        // let ie5 = new Button("Null", "Upgrade4", g1Off.x + this.pos.x - (this.width/2) + 220, g1Off.y + this.pos.y - (this.height/2) + this.headerheight + 260, 120, 50);
+        // this.elements.push(ie5);
         let ie6 = new Button("Sell", "SellTower", g1Off.x + this.pos.x - (this.width/2) + 80, g1Off.y + this.pos.y - (this.height/2) + this.headerheight + 320, 120, 50, 'red');
         this.elements.push(ie6);
         let ie7 = new Button("Back", "SwitchViewToMain", g1Off.x + this.pos.x - (this.width/2) + 80, g1Off.y + this.pos.y - (this.height/2) + this.headerheight + 440, 120, 50);
@@ -235,24 +235,24 @@ class Interface {
             this.text.value = "Damage $" + gui.focusTower.upgradePrices.damage;
         }
 
-        gui.elements[5].updateFunction = function () {
+        gui.elements[4].updateFunction = function () {
             this.text.value = "Sell $" + Math.floor(gui.focusTower.price * 0.5);
         }
 
-        gui.elements[8].updateFunction = function () {
+        gui.elements[7].updateFunction = function () {
             this.text.value = "Damage: " + gui.focusTower.damage;
         }
 
-        gui.elements[9].updateFunction = function () {
+        gui.elements[8].updateFunction = function () {
             this.text.value = "ShootSpeed: " + gui.focusTower.shootSpeed;
         }
 
-        gui.elements[10].updateFunction = function () {
+        gui.elements[9].updateFunction = function () {
             this.text.value = "Range: " + gui.focusTower.range;
         }
 
         gui.elements[0].text.value = tower.friendlyTowerNames(this.focusTower.towerID);
-        gui.elements[7].text.value = capitalizeFirstLetter(this.focusTower.targeting);
+        gui.elements[6].text.value = capitalizeFirstLetter(this.focusTower.targeting);
     }
 
     unloadAllElements() {

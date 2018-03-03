@@ -2,8 +2,8 @@
 
 class Game {
     constructor() {
-        this.money = 10000;
-        this.health = 100;
+        this.money = 100;
+        this.health = 10;
 
         //DONT TOUCH
         this.wave = 0;

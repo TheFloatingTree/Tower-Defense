@@ -75,7 +75,7 @@ class Enemy {
         two.remove(this.group);
         this.dead = true;
 
-        game.addMoney(5);
+        game.addMoney(Math.floor(random(3, 8)));
     }
 
     getTarget(posx, posy, range, type) {
@@ -106,7 +106,7 @@ class Enemy {
     }
 
     checkDead() {
-        if (this.health <= 0) {
+        if (this.health <= 1) {
             this.death();
         }
     }

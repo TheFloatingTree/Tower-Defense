@@ -377,7 +377,7 @@ class MediumTower extends Tower {
         this.price = 60;
 
         this.upgradePrices = {
-            range: 30,
+            range: 40,
             speed: 50,
             damage: 50
         }
@@ -505,9 +505,9 @@ class BestTower extends Tower {
         this.price = 100;
 
         this.upgradePrices = {
-            range: 15,
-            speed: 30,
-            damage: 25
+            range: 35,
+            speed: 40,
+            damage: 55
         }
 
         this.upgradeAmounts = {
